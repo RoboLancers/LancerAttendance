@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Sign In{% endblock %}
+{% block body %}
+    <h1>{{ message }} {{ name }}</h1>
+
+    <script>
+        window.setTimeout(function () {
+            window.location.href = "{{ url_for('index') }}";
+        }, 1500);
+    </script>
+{% endblock %}

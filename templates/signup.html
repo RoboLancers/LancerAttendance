@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up{% endblock %}
+{% block signUpActive %}active{% endblock %}
+{% set active_page = "signUp" %}
+{% block head %}
+    <script>
+        $( document ).ready(function() {
+            $("#scanRFIDButton").click(function () {
+                const url = "{{ url_for('get_rfid') }}";
+                $(location).attr('href', url);
+                const loadingDiv = document.getElementById('loading');
+                loadingDiv.style.display='block';
+
+                $("#scanRFIDButton").prop('disabled', true);
+
+                var counter = 5;
+                const interval = setInterval(function() {
+                    counter--;
+                    $("#timeout").text("Timeout in " + counter);
+                }, 1000);
+            });
+        });
+
+        function validateForm(){
+            var rfid = document.forms["SignUp"]["rfidNumber"].value;
+            var firstName = document.forms["SignUp"]["firstName"].value;
+            var lastName = document.forms["SignUp"]["lastName"].value;
+
+            if(rfid == null || rfid == ""){
+                const rfidDiv = document.getElementById('rfidDiv');
+                rfidDiv.style.display='block';
+                return false;
+            }
+
+            if(firstName == null || firstName == ""){
+                const firstNameDiv = document.getElementById('firstNameDiv');
+                firstNameDiv.style.display='block';
+                return false;
+            }
+
+            if(lastName == null || lastName == ""){
+                const lastNameDiv = document.getElementById('lastNameDiv');
+                lastNameDiv.style.display='block';
+                return false;
+            }
+        }
+    </script>
+{% endblock %}
+{% block body %}
+    {% if wasSignedUp %}
+        <div class="alert alert-success" role="alert">
+            Signup successful for {{ firstName }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 id="timeout"></h3>
+        </div>
+    </div>
+
+    <form method="post" name="SignUp" onsubmit="return validateForm()">
+        <div class="alert alert-danger" role="alert" style="display: none;" id="rfidDiv">
+            Please fill in rfidNumber
+        </div>
+        <div class="form-group row">
+            <label for="rfidNumber" class="col-sm-2 col-form-label">RFID Number</label>
+            <input type="number" class="form-control col-sm-8" name="rfidNumber" id="rfidNumber" placeholder="Scan card" value="{{ rfidNumber }}" readonly>
+            <button class="btn btn-primary col-sm-2" id="scanRFIDButton">Scan RFID</button>
+        </div>
+
+        <div class="alert alert-danger" role="alert" style="display: none;" id="firstNameDiv">
+            Please fill in first name
+        </div>
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Enter first name" required>
+            </div>
+        </div>
+
+        <div class="alert alert-danger" role="alert" style="display: none;" id="lastNameDiv">
+            Please fill in last name
+        </div>
+        <div class="form-group row">
+            <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Enter last name" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

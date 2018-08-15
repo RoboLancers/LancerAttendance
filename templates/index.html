@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Lancer Attendance{% endblock %}
+{% block homeActive %}active{% endblock %}
+{% set active_page = "index" %}
+{% block head %}
+    <script>
+        $( document ).ready(function() {
+            $("#signInButton").click(function () {
+                const url = "{{ url_for('sign_in') }}";
+                $(location).attr('href', url);
+                const loadingDiv = document.getElementById('loading');
+                loadingDiv.style.display='block';
+
+                $("#signInButton").prop('disabled', true);
+                $("#signOutButton").prop('disabled', true);
+                $("#signal").text("Singing In");
+
+                var counter = 5;
+                const interval = setInterval(function() {
+                    counter--;
+                    $("#timeout").text("Timeout in " + counter);
+                }, 1000);
+            });
+
+            $("#signOutButton").click(function () {
+                const url = "{{ url_for('sign_out') }}";
+                $(location).attr('href', url);
+                const loadingDiv = document.getElementById('loading');
+                loadingDiv.style.display='block';
+
+                $("#signInButton").prop('disabled', true);
+                $("#signOutButton").prop('disabled', true);
+                $("#signal").text("Singing Out");
+
+                var counter = 5;
+                const interval = setInterval(function() {
+                    counter--;
+                    $("#timeout").text("Timeout in " + counter);
+                }, 1000);
+            });
+        });
+    </script>
+{% endblock %}
+{% block body %}
+    <div id="contents">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 id="timeout" class="box"></h3>
+            </div>
+        </div>
+        <div class="row top-buffer">
+            <div class="col-sm-12">
+                <h1 class="box">Robolancer's Attendance System</h1>
+            </div>
+        </div>
+        <div class="row top-buffer">
+            <div class="col-sm-12">
+                <h1 id="signal" class="box"></h1>
+            </div>
+        </div>
+        <div class="row top-buffer">
+            <div class="col-sm-6">
+                <div class="text-right">
+                    <button type="button" class="btn btn-primary btn-lg" id="signInButton">Sign In!</button>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="text-left">
+                    <button type="button" class="btn btn-danger btn-lg" id="signOutButton">Sign Out!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
