@@ -10,6 +10,18 @@ import gspread
 from gspread import CellNotFound
 from oauth2client.service_account import ServiceAccountCredentials
 
+import socket
+
+# Hang if we have no internet connection
+while True:
+    try:
+        host = socket.gethostbyname('www.google.com')
+        s = socket.create_connection((host, 80), 2)
+        break
+    except:
+        pass
+
+
 app = Flask(__name__)
 MIFAREReader = MFRC522.MFRC522()
 has_id = False
