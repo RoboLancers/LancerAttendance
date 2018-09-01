@@ -1,4 +1,15 @@
 $(document).ready(function() {
+    var nasa_url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&hd=True';
+    $.ajax({
+        url: nasa_url,
+        type: 'GET',
+        success: function(result){
+            var hd_url = result.hdurl;
+            console.log(hd_url);
+            $('body').css('background', 'url(' + hd_url + ') no-repeat center')
+        }
+    });
+
     function refreshAt(hours, minutes, seconds) {
         var now = new Date();
         var then = new Date();
@@ -17,5 +28,5 @@ $(document).ready(function() {
         setTimeout(function() { window.location.reload(true); }, timeout);
     }
 
-    refreshAt(0, 10, 0)
+    refreshAt(0, 10, 0);
 });
