@@ -24,7 +24,6 @@ while True:
 
 app = Flask(__name__)
 MIFAREReader = MFRC522.MFRC522()
-has_id = False
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
@@ -35,131 +34,97 @@ gc = gspread.authorize(credentials)
 
 worksheet = gc.open("LancerAttendance").sheet1
 
+current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace(" 0", " ")
+
+date_cell = None
+
+try:
+    date_cell = worksheet.find(current_date)
+except CellNotFound:
+    pass
+
 
 def next_available_row(ws):
     str_list = list(filter(None, ws.col_values(3)))
     return str(len(str_list)+1)
 
 
+def get_current_date():
+    global current_date, date_cell
+    newest_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace(" 0", " ")
+
+    if newest_date != current_date:
+        current_date = newest_date
+        date_cell = worksheet.find(current_date)
+
+
+def scan_rfid():
+    uid_string = ''
+    # Scan for cards
+    (status, TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+
+    # If a card is found
+    if status == MIFAREReader.MI_OK:
+
+        # Get the UID of the card
+        (status, uid) = MIFAREReader.MFRC522_Anticoll()
+
+        # If we have the UID, continue
+        if status == MIFAREReader.MI_OK:
+
+            for uid_part in uid:
+                uid_string += str(uid_part)
+
+    return uid_string
+
+
+def handle_signing(is_signing_in):
+    gc.login()
+    start_time = time.time()
+
+    get_current_date()
+
+    if date_cell is None:
+        return render_template('sign.html', message='Error. Date not set in spreadsheet. Please contact Johnson', name='')
+
+    while True:
+        if time.time() - start_time > 5:
+            return redirect(url_for('index'))
+
+        uid_string = scan_rfid()
+
+        if uid_string != '':
+            try:
+                data_cell = worksheet.find(uid_string)
+            except CellNotFound:
+                return render_template('sign.html', message='User is not registered', name=uid_string)
+
+            current_time = datetime.datetime.now().strftime('%I:%M %p')
+
+            first_name = worksheet.cell(data_cell.row, 1).value
+
+            if is_signing_in:
+                worksheet.update_cell(data_cell.row, date_cell.col, current_time)
+                return render_template('sign.html', message='Welcome to robotics', name=first_name)
+            else:
+                worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
+                return render_template('sign.html', message='Have a nice day', name=first_name)
+
+
 @app.route("/")
 def index():
+    get_current_date()
     return render_template('index.html')
 
 
 @app.route("/signIn")
 def sign_in():
-    gc.login()
-    start_time = time.time()
-
-    while not has_id:
-        if time.time() - start_time > 5:
-            return redirect(url_for('index'))
-
-        uid_string = ''
-        # Scan for cards
-        (status, TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-
-        # If a card is found
-        if status == MIFAREReader.MI_OK:
-
-            # Get the UID of the card
-            (status, uid) = MIFAREReader.MFRC522_Anticoll()
-
-            # If we have the UID, continue
-            if status == MIFAREReader.MI_OK:
-
-                for uid_part in uid:
-                    uid_string += str(uid_part)
-
-                data_cell = None
-                try:
-                    data_cell = worksheet.find(uid_string)
-                except CellNotFound:
-                    pass
-
-                current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace(" 0", " ")
-
-                date_cell = None
-
-                try:
-                    date_cell = worksheet.find(current_date)
-                except CellNotFound:
-                    pass
-
-                current_time = datetime.datetime.now().strftime('%I:%M %p')
-
-                if date_cell is not None:
-                    first_name = ''
-
-                    if data_cell is None:
-                        row = next_available_row(worksheet)
-                        worksheet.update_acell("C{}".format(row), uid_string)
-                        worksheet.update_cell(row, date_cell.col, current_time)
-                    else:
-                        first_name = worksheet.cell(data_cell.row, 1).value
-                        worksheet.update_cell(data_cell.row, date_cell.col, current_time)
-
-                    return render_template('sign.html', message='Welcome to robotics', name=first_name)
-                else:
-                    return render_template('sign.html', message='Error. Date not set in spreadsheet', name='')
+    return handle_signing(True)
 
 
 @app.route("/signOut")
 def sign_out():
-    gc.login()
-    start_time = time.time()
-
-    while not has_id:
-        if time.time() - start_time > 5:
-            return redirect(url_for('index'))
-
-        uid_string = ''
-        # Scan for cards
-        (status, TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-
-        # If a card is found
-        if status == MIFAREReader.MI_OK:
-
-            # Get the UID of the card
-            (status, uid) = MIFAREReader.MFRC522_Anticoll()
-
-            # If we have the UID, continue
-            if status == MIFAREReader.MI_OK:
-
-                for uid_part in uid:
-                    uid_string += str(uid_part)
-
-                data_cell = None
-                try:
-                    data_cell = worksheet.find(uid_string)
-                except CellNotFound:
-                    pass
-
-                current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace(" 0", " ")
-
-                date_cell = None
-
-                try:
-                    date_cell = worksheet.find(current_date)
-                except CellNotFound:
-                    pass
-
-                current_time = datetime.datetime.now().strftime('%I:%M %p')
-
-                if date_cell is not None:
-                    first_name = ''
-
-                    if data_cell is None:
-                        row = next_available_row(worksheet)
-                        worksheet.update_acell("C{}".format(row), uid_string)
-                        worksheet.update_cell(row, date_cell.col, current_time)
-                    else:
-                        first_name = worksheet.cell(data_cell.row, 1).value
-                        worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
-
-                    return render_template('sign.html', message='Have a nice day', name=first_name)
-                else:
-                    return render_template('sign.html', message='Error. Date not set in spreadsheet! :(', name='')
+    return handle_signing(False)
 
 
 @app.route("/signUp", methods=['POST', 'GET'])
@@ -190,7 +155,7 @@ def sign_up():
 def get_rfid():
     start_time = time.time()
 
-    while not has_id:
+    while True:
         if time.time() - start_time > 5:
             return redirect(url_for('sign_up'))
 
