@@ -34,14 +34,14 @@ gc = gspread.authorize(credentials)
 
 worksheet = gc.open("LancerAttendance").sheet1
 
-current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace(" 0", " ")
+current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace("0", "")
 
 date_cell = None
 
 try:
     date_cell = worksheet.find(current_date)
 except CellNotFound:
-    pass
+    current_date = None
 
 
 def next_available_row(ws):
@@ -51,11 +51,15 @@ def next_available_row(ws):
 
 def get_current_date():
     global current_date, date_cell
-    newest_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace(" 0", " ")
+    newest_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace("0", "")
 
     if newest_date != current_date:
         current_date = newest_date
-        date_cell = worksheet.find(current_date)
+        
+        try:
+            date_cell = worksheet.find(current_date)
+        except CellNotFound:
+            current_date = None
 
 
 def scan_rfid():
@@ -79,14 +83,15 @@ def scan_rfid():
 
 
 def handle_signing(is_signing_in):
+    
     gc.login()
-    start_time = time.time()
-
     get_current_date()
 
     if date_cell is None:
-        return render_template('sign.html', message='Error. Date not set in spreadsheet. Please contact Johnson', name='')
-
+        return render_template('sign.html', message='Error. Date not set in spreadsheet. Please contact Johnson', name='', error=':(')
+    
+    start_time = time.time()
+    
     while True:
         if time.time() - start_time > 5:
             return redirect(url_for('index'))
