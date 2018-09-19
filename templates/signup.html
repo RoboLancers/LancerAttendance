@@ -19,6 +19,10 @@
                     $("#timeout").text("Timeout in " + counter);
                 }, 1000);
             });
+
+            $("#submitButton").click(function () {
+                $("#submitButton").prop('disabled', true)
+            });
         });
 
         function validateForm(){
@@ -88,6 +92,6 @@
                 <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Enter last name" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
     </form>
 {% endblock %}
