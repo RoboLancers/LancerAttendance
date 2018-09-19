@@ -142,6 +142,11 @@ def sign_up():
         first_name = str(request.form['firstName'])
         last_name = str(request.form['lastName'])
 
+        rfid_values = worksheet.col_values(rfid_col)
+
+        if str(rfid_number) in rfid_values:
+            return render_template('error.html', error='You already sign up')
+
         row = next_available_row(worksheet)
         worksheet.update_acell("A{}".format(row), first_name)
         worksheet.update_acell("B{}".format(row), last_name)
