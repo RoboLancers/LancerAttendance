@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="01e39e5c-52cf-4fb4-8b97-3a5a2be9880b" name="Default Changelist" comment="Changes&#10;&#10;Remove useless has_id boolean&#10;Refactor signing_in and singing_out for DRY&#10;Hang if there is no internet connection&#10;Show message if user is not in the system&#10;Optimize signing">
+    <list default="true" id="01e39e5c-52cf-4fb4-8b97-3a5a2be9880b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/error.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendance.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sign.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sign.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +36,7 @@
         <counts>
           <entry key="css" value="5" />
           <entry key="gif" value="1" />
-          <entry key="html" value="23" />
+          <entry key="html" value="25" />
           <entry key="ico" value="1" />
           <entry key="jpg" value="2" />
           <entry key="js" value="7" />
@@ -44,7 +46,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CSS" value="5" />
-          <entry key="HTML" value="23" />
+          <entry key="HTML" value="25" />
           <entry key="Image" value="4" />
           <entry key="JavaScript" value="7" />
           <entry key="Python" value="8" />
@@ -54,19 +56,19 @@
         <counts>
           <entry key="css" value="781" />
           <entry key="dummy" value="3" />
-          <entry key="html" value="3481" />
+          <entry key="html" value="3503" />
           <entry key="js" value="1215" />
-          <entry key="py" value="2768" />
-          <entry key="txt" value="282" />
+          <entry key="py" value="2954" />
+          <entry key="txt" value="346" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="781" />
-          <entry key="HTML" value="3481" />
+          <entry key="HTML" value="3503" />
           <entry key="JavaScript" value="1215" />
-          <entry key="PLAIN_TEXT" value="285" />
-          <entry key="Python" value="2768" />
+          <entry key="PLAIN_TEXT" value="349" />
+          <entry key="Python" value="2954" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -82,25 +84,43 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/attendance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+            <state relative-caret-position="307">
+              <caret line="91" column="110" selection-start-line="91" selection-start-column="110" selection-end-line="91" selection-end-column="110" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1537366919947" expanded="true" signature="2288:3217" ph="..." />
-                <marker date="1537366919947" expanded="true" signature="3216:3217" ph="..." />
-                <marker date="1537366919947" expanded="true" signature="3348:3383" ph="..." />
-                <marker date="1537366919947" expanded="true" signature="4354:5205" ph="..." />
-                <marker date="1537366919947" expanded="true" signature="5080:5205" ph="..." />
+                <marker date="1537394616053" expanded="true" signature="2286:3215" ph="..." />
+                <marker date="1537394616053" expanded="true" signature="3214:3215" ph="..." />
+                <marker date="1537394616053" expanded="true" signature="3346:3381" ph="..." />
+                <marker date="1537394616053" expanded="true" signature="4494:5345" ph="..." />
+                <marker date="1537394616053" expanded="true" signature="5220:5345" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/sign.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/error.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/signup.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+            <state relative-caret-position="408">
+              <caret line="24" column="15" lean-forward="true" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -119,10 +139,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>col_</find>
+      <find>3</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -140,10 +166,11 @@
         <option value="$PROJECT_DIR$/static/styles/style.css" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
-        <option value="$PROJECT_DIR$/templates/sign.html" />
         <option value="$PROJECT_DIR$/static/scripts/main.js" />
-        <option value="$PROJECT_DIR$/attendance.py" />
         <option value="$PROJECT_DIR$/templates/signup.html" />
+        <option value="$PROJECT_DIR$/attendance.py" />
+        <option value="$PROJECT_DIR$/templates/error.html" />
+        <option value="$PROJECT_DIR$/templates/sign.html" />
       </list>
     </option>
   </component>
@@ -277,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535897195576</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Disable submit button during sign up if already clicked">
+      <created>1537367334968</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1537367334968</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -317,7 +351,8 @@
     <MESSAGE value="Add checking of internet connection" />
     <MESSAGE value="Add nasa apod background" />
     <MESSAGE value="Changes&#10;&#10;Remove useless has_id boolean&#10;Refactor signing_in and singing_out for DRY&#10;Hang if there is no internet connection&#10;Show message if user is not in the system&#10;Optimize signing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;&#10;Remove useless has_id boolean&#10;Refactor signing_in and singing_out for DRY&#10;Hang if there is no internet connection&#10;Show message if user is not in the system&#10;Optimize signing" />
+    <MESSAGE value="Disable submit button during sign up if already clicked" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disable submit button during sign up if already clicked" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://C:/Python27/Lib/site-packages/flask/cli.py">
@@ -355,13 +390,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/sign.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/scripts/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -376,21 +404,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <marker date="1537366919947" expanded="true" signature="2288:3217" ph="..." />
-            <marker date="1537366919947" expanded="true" signature="3216:3217" ph="..." />
-            <marker date="1537366919947" expanded="true" signature="3348:3383" ph="..." />
-            <marker date="1537366919947" expanded="true" signature="4354:5205" ph="..." />
-            <marker date="1537366919947" expanded="true" signature="5080:5205" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
@@ -400,8 +413,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/signup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+        <state relative-caret-position="408">
+          <caret line="24" column="15" lean-forward="true" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/attendance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="91" column="110" selection-start-line="91" selection-start-column="110" selection-end-line="91" selection-end-column="110" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <marker date="1537394616053" expanded="true" signature="2286:3215" ph="..." />
+            <marker date="1537394616053" expanded="true" signature="3214:3215" ph="..." />
+            <marker date="1537394616053" expanded="true" signature="3346:3381" ph="..." />
+            <marker date="1537394616053" expanded="true" signature="4494:5345" ph="..." />
+            <marker date="1537394616053" expanded="true" signature="5220:5345" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/sign.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
         </state>
       </provider>
     </entry>

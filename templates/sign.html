@@ -3,12 +3,6 @@
 {% block body %}
     <h1>{{ message }} {{ name }}</h1>
     <h1 id='error'>{{ error }}</h1>
-    
-    <script>
-	if($('#error').is(':empty')){
-            window.setTimeout(function () {
-                window.location.href = "{{ url_for('index') }}";
-            }, 4000);
-	}
-    </script>
+
+    <button><a href="{{ url_for('index') }}">Get me out of here</a></button>
 {% endblock %}

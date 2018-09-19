@@ -37,6 +37,7 @@ worksheet = gc.open("LancerAttendance").sheet1
 current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace("0", "")
 
 date_cell = None
+rfid_col = 3
 
 try:
     date_cell = worksheet.find(current_date)
@@ -45,7 +46,7 @@ except CellNotFound:
 
 
 def next_available_row(ws):
-    str_list = list(filter(None, ws.col_values(3)))
+    str_list = list(filter(None, ws.col_values(rfid_col)))
     return str(len(str_list)+1)
 
 
@@ -88,7 +89,7 @@ def handle_signing(is_signing_in):
     get_current_date()
 
     if date_cell is None:
-        return render_template('sign.html', message='Error. Date not set in spreadsheet. Please contact Johnson', name='', error=':(')
+        return render_template('error.html', error='Error. Date not set in spreadsheet. Please contact Johnson')
     
     start_time = time.time()
     
