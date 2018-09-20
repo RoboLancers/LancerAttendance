@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Sign In{% endblock %}
+{% block body %}
+    <h1>Have a nice day {{ name }}!</h1>
+
+    <script>
+        window.setTimeout(function () {
+            window.location.href = "{{ url_for('sign_out') }}";
+        }, 4000);
+    </script>
+{% endblock %}

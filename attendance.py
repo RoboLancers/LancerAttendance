@@ -37,6 +37,7 @@ worksheet = gc.open("LancerAttendance").sheet1
 current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace("0", "")
 
 date_cell = None
+rfid_col = 3
 
 try:
     date_cell = worksheet.find(current_date)
@@ -45,7 +46,7 @@ except CellNotFound:
 
 
 def next_available_row(ws):
-    str_list = list(filter(None, ws.col_values(3)))
+    str_list = list(filter(None, ws.col_values(rfid_col)))
     return str(len(str_list)+1)
 
 
@@ -88,7 +89,7 @@ def handle_signing(is_signing_in):
     get_current_date()
 
     if date_cell is None:
-        return render_template('sign.html', message='Error. Date not set in spreadsheet. Please contact Johnson', name='', error=':(')
+        return render_template('error.html', error='Error. Date not set in spreadsheet. Please contact Johnson')
     
     start_time = time.time()
     
@@ -102,7 +103,7 @@ def handle_signing(is_signing_in):
             try:
                 data_cell = worksheet.find(uid_string)
             except CellNotFound:
-                return render_template('sign.html', message='User is not registered', name=uid_string)
+                return render_template('error.html', error='Who are you? You are not registered!')
 
             current_time = datetime.datetime.now().strftime('%I:%M %p')
 
@@ -110,10 +111,23 @@ def handle_signing(is_signing_in):
 
             if is_signing_in:
                 worksheet.update_cell(data_cell.row, date_cell.col, current_time)
-                return render_template('sign.html', message='Welcome to robotics', name=first_name)
+                return render_template('signin.html', name=first_name)
             else:
-                worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
-                return render_template('sign.html', message='Have a nice day', name=first_name)
+
+                sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
+
+                if sign_in_time_cell is not None:
+                    sign_in_time_string = sign_in_time_cell.value
+                    sign_in_time = datetime.datetime.strptime(sign_in_time_string, '%I:%M %p')
+
+                    if (sign_in_time + datetime.timedelta(hours=2)).time() < datetime.datetime.now().time():
+                        worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
+                        return render_template('signout.html', name=first_name)
+                    else:
+                        return render_template('error.html', error='You have to stay at least 2 hours to sign out. Talk to Rickey if you don\'t like that')
+                else:
+                    worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
+                    return render_template('signout.html', name=first_name)
 
 
 @app.route("/")
@@ -140,6 +154,11 @@ def sign_up():
         rfid_number = int(request.form['rfidNumber'])
         first_name = str(request.form['firstName'])
         last_name = str(request.form['lastName'])
+
+        rfid_values = worksheet.col_values(rfid_col)
+
+        if str(rfid_number) in rfid_values:
+            return render_template('error.html', error='You already sign up')
 
         row = next_available_row(worksheet)
         worksheet.update_acell("A{}".format(row), first_name)

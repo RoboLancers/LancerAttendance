@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Error!{% endblock %}
+{% block body %}
+    <h1 id='error'>{{ error }}</h1>
+
+    <button><a href="{{ url_for('index') }}">Get me out of here</a></button>
+{% endblock %}

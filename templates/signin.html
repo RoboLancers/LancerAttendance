@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Sign In{% endblock %}
+{% block body %}
+    <h1>Welcome to Robotics {{ name }}</h1>
+
+    <script>
+        window.setTimeout(function () {
+            window.location.href = "{{ url_for('sign_in') }}";
+        }, 4000);
+    </script>
+{% endblock %}
