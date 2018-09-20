@@ -113,8 +113,21 @@ def handle_signing(is_signing_in):
                 worksheet.update_cell(data_cell.row, date_cell.col, current_time)
                 return render_template('sign.html', message='Welcome to robotics', name=first_name)
             else:
-                worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
-                return render_template('sign.html', message='Have a nice day', name=first_name)
+
+                sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
+
+                if sign_in_time_cell is not None:
+                    sign_in_time_string = sign_in_time_cell.value
+                    sign_in_time = datetime.datetime.strptime(sign_in_time_string, '%I:%M %p')
+
+                    if (sign_in_time + datetime.timedelta(hours=2)).time() < datetime.datetime.now().time():
+                        worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
+                        return render_template('sign.html', message='Have a nice day', name=first_name)
+                    else:
+                        return render_template('error.html', error='You have to stay at least 2 hours to sign out. Talk to Rickey if you don\'t like that')
+                else:
+                    worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
+                    return render_template('sign.html', message='Have a nice day', name=first_name)
 
 
 @app.route("/")
