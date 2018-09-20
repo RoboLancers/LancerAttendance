@@ -122,12 +122,12 @@ def handle_signing(is_signing_in):
 
                     if (sign_in_time + datetime.timedelta(hours=2)).time() < datetime.datetime.now().time():
                         worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
-                        return render_template('sign.html', message='Have a nice day', name=first_name)
+                        return render_template('signout.html', name=first_name)
                     else:
                         return render_template('error.html', error='You have to stay at least 2 hours to sign out. Talk to Rickey if you don\'t like that')
                 else:
                     worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
-                    return render_template('sign.html', message='Have a nice day', name=first_name)
+                    return render_template('signout.html', name=first_name)
 
 
 @app.route("/")
