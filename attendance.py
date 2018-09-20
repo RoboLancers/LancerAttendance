@@ -103,7 +103,7 @@ def handle_signing(is_signing_in):
             try:
                 data_cell = worksheet.find(uid_string)
             except CellNotFound:
-                return render_template('sign.html', message='User is not registered', name=uid_string)
+                return render_template('error.html', error='Who are you? You are not registered!')
 
             current_time = datetime.datetime.now().strftime('%I:%M %p')
 
@@ -111,7 +111,7 @@ def handle_signing(is_signing_in):
 
             if is_signing_in:
                 worksheet.update_cell(data_cell.row, date_cell.col, current_time)
-                return render_template('sign.html', message='Welcome to robotics', name=first_name)
+                return render_template('signin.html', name=first_name)
             else:
 
                 sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
