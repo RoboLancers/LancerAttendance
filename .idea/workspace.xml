@@ -18,17 +18,17 @@
     <session id="-256981697">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="10" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="2" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -58,7 +58,7 @@
           <entry key="html" value="3600" />
           <entry key="js" value="1215" />
           <entry key="py" value="3720" />
-          <entry key="txt" value="722" />
+          <entry key="txt" value="774" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -66,7 +66,7 @@
           <entry key="CSS" value="781" />
           <entry key="HTML" value="3600" />
           <entry key="JavaScript" value="1215" />
-          <entry key="PLAIN_TEXT" value="725" />
+          <entry key="PLAIN_TEXT" value="777" />
           <entry key="Python" value="3720" />
         </counts>
       </usages-collector>
@@ -83,8 +83,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/attendance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="36" column="85" selection-start-line="36" selection-start-column="68" selection-end-line="36" selection-end-column="85" />
+            <state relative-caret-position="527">
+              <caret line="51" selection-start-line="51" selection-end-line="51" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -215,6 +215,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -231,7 +232,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -398,14 +398,21 @@
       <option name="project" value="LOCAL" />
       <updated>1537417125678</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fix bug where the zeroes would be removed from date">
+      <created>1537491447834</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1537491447834</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14563759" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.147651" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -472,7 +479,8 @@
     <MESSAGE value="Add dedicated sign in and out page" />
     <MESSAGE value="Change attendance to use dedicated sign in and out page" />
     <MESSAGE value="Remove generic sign.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove generic sign.html" />
+    <MESSAGE value="Fix bug where the zeroes would be removed from date" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug where the zeroes would be removed from date" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://C:/Python27/Lib/site-packages/flask/cli.py">
@@ -528,8 +536,8 @@
     <entry file="file://$PROJECT_DIR$/templates/sign.html" />
     <entry file="file://$PROJECT_DIR$/attendance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="36" column="85" selection-start-line="36" selection-start-column="68" selection-end-line="36" selection-end-column="85" />
+        <state relative-caret-position="527">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

@@ -34,7 +34,7 @@ gc = gspread.authorize(credentials)
 
 worksheet = gc.open("LancerAttendance").sheet1
 
-current_date = '{dt.year}/{dt.month}/{dt.day}'.format(dt=datetime.datetime.now())
+current_date = '{dt.month}/{dt.day}'.format(dt=datetime.datetime.now())
 
 date_cell = None
 rfid_col = 3
@@ -52,7 +52,7 @@ def next_available_row(ws):
 
 def get_current_date():
     global current_date, date_cell
-    newest_date = '{dt.year}/{dt.month}/{dt.day}'.format(dt=datetime.datetime.now())
+    newest_date = '{dt.month}/{dt.day}'.format(dt=datetime.datetime.now())
 
     if newest_date != current_date:
         current_date = newest_date
