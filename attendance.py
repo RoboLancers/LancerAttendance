@@ -56,7 +56,7 @@ def get_current_date():
 
     if newest_date != current_date:
         current_date = newest_date
-        
+
         try:
             date_cell = worksheet.find(current_date)
         except CellNotFound:
@@ -84,15 +84,15 @@ def scan_rfid():
 
 
 def handle_signing(is_signing_in):
-    
+
     gc.login()
     get_current_date()
 
     if date_cell is None:
         return render_template('error.html', error='Error. Date not set in spreadsheet. Please contact Johnson')
-    
+
     start_time = time.time()
-    
+
     while True:
         if time.time() - start_time > 5:
             return redirect(url_for('index'))
@@ -209,7 +209,7 @@ def favicon():
 
 if __name__ == "__main__":
     try:
-        app.run()
+        app.run(threaded=True)
     except Exception as ex:
         pass
     finally:
