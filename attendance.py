@@ -83,7 +83,8 @@ def scan_rfid():
     return uid_string
 
 
-def handle_signing(is_signing_in):
+@app.route("/handleSigning")
+def handle_signing():
 
     gc.login()
     get_current_date()
@@ -109,13 +110,14 @@ def handle_signing(is_signing_in):
 
             first_name = worksheet.cell(data_cell.row, 1).value
 
+            sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
+
+            is_signing_in = True if (sign_in_time_cell.value is None or sign_in_time_cell == "") else False
+
             if is_signing_in:
                 worksheet.update_cell(data_cell.row, date_cell.col, current_time)
                 return render_template('signin.html', name=first_name)
             else:
-
-                sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
-
                 if sign_in_time_cell is not None:
                     sign_in_time_string = sign_in_time_cell.value
                     sign_in_time = datetime.datetime.strptime(sign_in_time_string, '%I:%M %p')
@@ -134,16 +136,6 @@ def handle_signing(is_signing_in):
 def index():
     get_current_date()
     return render_template('index.html')
-
-
-@app.route("/signIn")
-def sign_in():
-    return handle_signing(True)
-
-
-@app.route("/signOut")
-def sign_out():
-    return handle_signing(False)
 
 
 @app.route("/signUp", methods=['POST', 'GET'])
