@@ -34,7 +34,7 @@ gc = gspread.authorize(credentials)
 
 worksheet = gc.open("LancerAttendance").sheet1
 
-current_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace("0", "")
+current_date = '{dt.month}/{dt.day}'.format(dt=datetime.datetime.now())
 
 date_cell = None
 rfid_col = 3
@@ -52,11 +52,11 @@ def next_available_row(ws):
 
 def get_current_date():
     global current_date, date_cell
-    newest_date = datetime.datetime.now().strftime('%m/%d').lstrip("0").replace("0", "")
+    newest_date = '{dt.month}/{dt.day}'.format(dt=datetime.datetime.now())
 
     if newest_date != current_date:
         current_date = newest_date
-        
+
         try:
             date_cell = worksheet.find(current_date)
         except CellNotFound:
@@ -83,16 +83,17 @@ def scan_rfid():
     return uid_string
 
 
-def handle_signing(is_signing_in):
-    
+@app.route("/handleSigning")
+def handle_signing():
+
     gc.login()
     get_current_date()
 
     if date_cell is None:
         return render_template('error.html', error='Error. Date not set in spreadsheet. Please contact Johnson')
-    
+
     start_time = time.time()
-    
+
     while True:
         if time.time() - start_time > 5:
             return redirect(url_for('index'))
@@ -109,13 +110,14 @@ def handle_signing(is_signing_in):
 
             first_name = worksheet.cell(data_cell.row, 1).value
 
+            sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
+
+            is_signing_in = True if (sign_in_time_cell.value is None or sign_in_time_cell == "") else False
+
             if is_signing_in:
                 worksheet.update_cell(data_cell.row, date_cell.col, current_time)
                 return render_template('signin.html', name=first_name)
             else:
-
-                sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
-
                 if sign_in_time_cell is not None:
                     sign_in_time_string = sign_in_time_cell.value
                     sign_in_time = datetime.datetime.strptime(sign_in_time_string, '%I:%M %p')
@@ -134,16 +136,6 @@ def handle_signing(is_signing_in):
 def index():
     get_current_date()
     return render_template('index.html')
-
-
-@app.route("/signIn")
-def sign_in():
-    return handle_signing(True)
-
-
-@app.route("/signOut")
-def sign_out():
-    return handle_signing(False)
 
 
 @app.route("/signUp", methods=['POST', 'GET'])
@@ -209,7 +201,7 @@ def favicon():
 
 if __name__ == "__main__":
     try:
-        app.run()
+        app.run(threaded=True)
     except Exception as ex:
         pass
     finally:

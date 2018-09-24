@@ -19,10 +19,6 @@
                     $("#timeout").text("Timeout in " + counter);
                 }, 1000);
             });
-
-            $("#submitButton").click(function () {
-                $("#submitButton").prop('disabled', true)
-            });
         });
 
         function validateForm(){
@@ -63,7 +59,7 @@
         </div>
     </div>
 
-    <form method="post" name="SignUp" onsubmit="return validateForm()">
+    <form method="post" name="SignUp" onsubmit="submitButton.disabled = true; return validateForm();">
         <div class="alert alert-danger" role="alert" style="display: none;" id="rfidDiv">
             Please fill in rfidNumber
         </div>
@@ -92,6 +88,6 @@
                 <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Enter last name" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+        <button type="submit" class="btn btn-primary" name="submitButton">Submit</button>
     </form>
 {% endblock %}

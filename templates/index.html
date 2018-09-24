@@ -5,32 +5,14 @@
 {% block head %}
     <script>
         $( document ).ready(function() {
-            $("#signInButton").click(function () {
-                const url = "{{ url_for('sign_in') }}";
+            $("#signingButton").click(function () {
+                const url = "{{ url_for('handle_signing') }}";
                 $(location).attr('href', url);
                 const loadingDiv = document.getElementById('loading');
                 loadingDiv.style.display='block';
 
-                $("#signInButton").prop('disabled', true);
-                $("#signOutButton").prop('disabled', true);
-                $("#signal").text("Singing In");
-
-                var counter = 5;
-                const interval = setInterval(function() {
-                    counter--;
-                    $("#timeout").text("Timeout in " + counter);
-                }, 1000);
-            });
-
-            $("#signOutButton").click(function () {
-                const url = "{{ url_for('sign_out') }}";
-                $(location).attr('href', url);
-                const loadingDiv = document.getElementById('loading');
-                loadingDiv.style.display='block';
-
-                $("#signInButton").prop('disabled', true);
-                $("#signOutButton").prop('disabled', true);
-                $("#signal").text("Singing Out");
+                $("#signingButton").prop('disabled', true);
+                $("#signal").text("Signing In/Out");
 
                 var counter = 5;
                 const interval = setInterval(function() {
@@ -59,14 +41,9 @@
             </div>
         </div>
         <div class="row top-buffer">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="text-right">
-                    <button type="button" class="btn btn-primary btn-lg" id="signInButton">Sign In!</button>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="text-left">
-                    <button type="button" class="btn btn-danger btn-lg" id="signOutButton">Sign Out!</button>
+                    <button type="button" class="btn btn-primary btn-lg" id="signingButton">Sign In/Out!</button>
                 </div>
             </div>
         </div>
