@@ -111,25 +111,21 @@ def handle_signing():
             first_name = worksheet.cell(data_cell.row, 1).value
 
             sign_in_time_cell = worksheet.cell(data_cell.row, date_cell.col)
+            sign_in_time_string = sign_in_time_cell.value
 
-            is_signing_in = True if (sign_in_time_cell.value is None or sign_in_time_cell == "") else False
+            is_signing_in = True if (sign_in_time_string == '' or sign_in_time_cell is None) else False
 
             if is_signing_in:
                 worksheet.update_cell(data_cell.row, date_cell.col, current_time)
                 return render_template('signin.html', name=first_name)
             else:
-                if sign_in_time_cell is not None:
-                    sign_in_time_string = sign_in_time_cell.value
-                    sign_in_time = datetime.datetime.strptime(sign_in_time_string, '%I:%M %p')
+                sign_in_time = datetime.datetime.strptime(sign_in_time_string, '%I:%M %p')
 
-                    if (sign_in_time + datetime.timedelta(hours=2)).time() < datetime.datetime.now().time():
-                        worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
-                        return render_template('signout.html', name=first_name)
-                    else:
-                        return render_template('error.html', error='You have to stay at least 2 hours to sign out. Talk to Rickey if you don\'t like that')
-                else:
+                if (sign_in_time + datetime.timedelta(hours=2)).time() < datetime.datetime.now().time():
                     worksheet.update_cell(data_cell.row, date_cell.col + 1, current_time)
                     return render_template('signout.html', name=first_name)
+                else:
+                    return render_template('error.html', error='You have to stay at least 2 hours to sign out. Talk to Rickey if you don\'t like that')
 
 
 @app.route("/")
@@ -203,6 +199,7 @@ if __name__ == "__main__":
     try:
         app.run(threaded=True)
     except Exception as ex:
+        print "Error"
         pass
     finally:
         GPIO.cleanup()
