@@ -4,7 +4,7 @@
 
 This attendance system modernized the manual attendance system that predated it. It was built using Flask and Google Sheets coupled with the MFRC522 library to provide an automatic solutions to taking attendance. When creating the system, I settled upon using something that everyone carried around, their student ID card. I combined the RFID reader with a Raspberry PI in kiosk mode to allow a seamless experience. I chose Flask as it was the simplest route to run a webserver and also allow interaction with UI.
 
-## Table of ContentI'm
+## Table of Content
 * [Installation](#install) 
 * [Hardware](#hardware)
 * [License](#license)
